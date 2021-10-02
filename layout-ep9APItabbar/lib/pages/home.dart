@@ -2,6 +2,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:layout/pages/detail.dart';
 
+import 'package:http/http.dart' as http; //ที่จำเป็นสำหรับ request ข้อมูล ร่วมกับ http ใน pubspec
+import 'dart:async';
+
 class HomePage extends StatefulWidget {
   //const HomePage({ Key? key }) : super(key: key);
 
@@ -18,15 +21,25 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
-        child: FutureBuilder(builder: (context, snapshot){  //snapshot คือการได้ข่้อมูลเป็น list{} มาจาก future
-          var data = json.decode(snapshot.data.toString()); //แปลงข้อมูลบางอย่างเป็นข้อความ >> แล้วมา decode เป็น list data เพื่อสามารถ data.length ได้
+        //child: FutureBuilder(builder: (context, snapshot){
+        //เรียกใช้ผ่าน git https
+        child: FutureBuilder(builder: (context,AsyncSnapshot snapshot){  //snapshot คือการได้ข่้อมูลเป็น list{} มาจาก future
+          //เรียกใช้แบบ ในเครื่อง
+          //var data = json.decode(snapshot.data.toString()); //แปลงข้อมูลบางอย่างเป็นข้อความ >> แล้วมา decode เป็น list data เพื่อสามารถ data.length ได้
+          //เรียกใช้ผ่าน git https
           return ListView.builder(
             itemBuilder: (BuildContext context, int index) { //เป็นเหมือนการรันข้อมูลทั้งหมด ที่นับได้ วนออกมาแสดงจนครบตาม itemcount
-              return MyBox(data[index]['title'], data[index]['subtitle'], data[index]['image_url'], data[index]['detail']);
+              //return MyBox(data[index]['title'], data[index]['subtitle'], data[index]['image_url'], data[index]['detail']);
+              //เรียกใช้ผ่าน git https
+              return MyBox(snapshot.data[index]['title'], snapshot.data[index]['subtitle'], snapshot.data[index]['image_url'], snapshot.data[index]['detail']);
             },
-            itemCount: data.length, );
+            //itemCount: data.length, );
+            //เรียกใช้ผ่าน git https
+            itemCount: snapshot.data.length, );
         },
-        future: DefaultAssetBundle.of(context).loadString('assets/data.json'), //แหล่งข้อมูลที่ไปเอามา
+        //เรียกใช้แบบ ในเครื่อง
+        //future: DefaultAssetBundle.of(context).loadString('assets/data.json'), //แหล่งข้อมูลที่ไปเอามา อ่านจากในเครื่อง
+        future: getData(),
         )
       ),//โครงสรา้ง app
     );
@@ -42,7 +55,7 @@ class _HomePageState extends State<HomePage> {
       margin: EdgeInsets.all(10),   // ปรับให้ กล่องห่างจากระยะขอบจอ เท่าไหร่
       padding: EdgeInsets.all(10), // ปรับให้ตัวหนังสือ ห่างจากกรอบมาเท่าไหร่
       //color: Colors.blue[50],
-      height: 150,
+      height: 170,
       decoration: BoxDecoration( //ตกแต่งกล่อง
         color: Colors.blue[50],
         borderRadius: BorderRadius.circular(20),
@@ -78,5 +91,15 @@ class _HomePageState extends State<HomePage> {
         ),
     );
   }
+
+  Future getData() async { //async จะใช้คู่กับ await ใช้สำหรับ รอ load 
+    //https://raw.githubusercontent.com/neooa-dev/BasicAPI/main/data.json
+    var url = Uri.https('raw.githubusercontent.com','/neooa-dev/BasicAPI/main/data.json');
+    var response = await http.get(url); //รอข้อมูลส่งกลับมาเก็บที่ตัวนี้
+    var result = json.decode(response.body);
+    return result;
+  }
+
+
 }
 
