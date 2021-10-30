@@ -19,13 +19,13 @@
     },
     {
         "title": "บริการพิสูจน์ตัวตน (IAL LV1)",
-        "subtitle":"สำหรับการใช้งานกับระบบงานของ DBD ",
+        "subtitle":"สำหรับการใช้งานกับระบบงานของ DBD เท่านั้น",
         "image_url":"https://cdn.pixabay.com/photo/2014/02/04/13/17/register-257986_1280.jpg",
         "detail":" "
     },
     {
         "title":"บริการพิสูจน์ตัวตน NDID Platform",
-        "subtitle":"สำหรับการใช้งานกับระบบงานของ DBD และ สามารถใช้งานทำธุรกรรมจดทะเบียนนิติบุคคลทางอิเล็กทรอนิกส์",
+        "subtitle":"สำหรับการใช้งานกับระบบงานของ DBD (Digital ID)",
         "image_url":"https://www.bangkokbankinnohub.com/wp-content/uploads/2018/11/BBL_Nov18_worldchange_DigitalID_V1_191118-800x450.jpg",
         "detail":" "
     }
